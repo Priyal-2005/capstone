@@ -22,7 +22,7 @@ MediConnect is a full-stack doctor appointment booking system that allows patien
 ### **Hosting**
 - **Frontend**: Vercel
 - **Backend**: Render
-- **Database**: MySQL Workbench/PlanetScale
+- **Database**: Aiven (MySQL)
 
 ---
 
@@ -49,7 +49,7 @@ MediConnect is a full-stack doctor appointment booking system that allows patien
 
 ## **Key Features**
 
-| **Category**              | **Features**                                                                                     |
+| **Category**              | **Features**                                                                                    |
 |---------------------------|-------------------------------------------------------------------------------------------------|
 | **Authentication & Authorization** | User registration, login, logout; role-based access for Patient, Doctor, and Admin; JWT-based authentication |
 | **CRUD Operations**       | Create, read, update, delete users, doctors, and appointments                                   |
@@ -65,13 +65,13 @@ MediConnect is a full-stack doctor appointment booking system that allows patien
 
 ## **Tech Stack**
 
-| **Layer**         | **Technologies**                                                                 |
-|-------------------|---------------------------------------------------------------------------------|
-| **Frontend**      | React.js, React Router, Fetch API, CSS                                          |
+| **Layer**         | **Technologies**                                                               |
+|-------------------|--------------------------------------------------------------------------------|
+| **Frontend**      | React.js, React Router, Fetch API, CSS                                         |
 | **Backend**       | Node.js, Express.js                                                            |
 | **Database**      | MySQL                                                                          |
 | **Authentication**| JWT-based login/signup                                                         |
-| **Hosting**       | Vercel, Render, PlanetScale (MySQL)                                            |
+| **Hosting**       | Vercel, Render, Aiven (MySQL)                                                  |
 
 ---
 
@@ -89,3 +89,13 @@ MediConnect is a full-stack doctor appointment booking system that allows patien
 | `/api/appointments`        | GET        | View user’s appointments            | Authenticated    |
 | `/api/admin/doctors`       | GET        | Admin manages doctor accounts       | Admin            |
 | `/api/admin/appointments`  | GET        | View all system appointments        | Admin            |
+
+
+
+GitHub Repo Link - https://github.com/Priyal-2005/capstone
+
+GitHub Link (2) - https://github.com/Priyal-2005/MediConnect
+
+Frontend Hosted Link (Vercel) - https://capstone-nine-black.vercel.app/
+
+Backend Hosted Link (Render) - https://capstone-1235.onrender.com
