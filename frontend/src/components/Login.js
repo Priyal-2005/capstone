@@ -12,7 +12,7 @@ function Login({onLogin, goToRegister}) {
             return;
         }
         try {
-            const response = await fetch("login", {
+            const response = await fetch("/login", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({email, password})
