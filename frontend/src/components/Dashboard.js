@@ -7,7 +7,7 @@ function Dashboard({user, onLogout}) {
     useEffect (() => {
         const fetchUser = async () => {
             try {
-                const response = await fetch("/user", {
+                const response = await fetch("https://capstone-1235.onrender.com/user", {
                     headers: {Authorization: `Bearer ${user.token}`}
                 })
                 const data = await response.json();

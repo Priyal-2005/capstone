@@ -11,7 +11,7 @@ function Register({onRegister, goToLogin}) {
 
     const handleRegister = async () => {
         try {
-            const response = await fetch("/register", {
+            const response = await fetch("https://capstone-1235.onrender.com/register", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({name, email, password, role})
