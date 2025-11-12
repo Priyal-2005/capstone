@@ -49,7 +49,7 @@ MediConnect is a full-stack doctor appointment booking system that allows patien
 
 ## **Key Features**
 
-| **Category**              | **Features**                                                                                    |
+| **Category**              | **Features**                                                                                     |
 |---------------------------|-------------------------------------------------------------------------------------------------|
 | **Authentication & Authorization** | User registration, login, logout; role-based access for Patient, Doctor, and Admin; JWT-based authentication |
 | **CRUD Operations**       | Create, read, update, delete users, doctors, and appointments                                   |
@@ -65,9 +65,9 @@ MediConnect is a full-stack doctor appointment booking system that allows patien
 
 ## **Tech Stack**
 
-| **Layer**         | **Technologies**                                                               |
-|-------------------|--------------------------------------------------------------------------------|
-| **Frontend**      | React.js, React Router, Fetch API, CSS                                         |
+| **Layer**         | **Technologies**                                                                 |
+|-------------------|---------------------------------------------------------------------------------|
+| **Frontend**      | React.js, React Router, Fetch API, CSS                                          |
 | **Backend**       | Node.js, Express.js                                                            |
 | **Database**      | MySQL                                                                          |
 | **Authentication**| JWT-based login/signup                                                         |
