@@ -1,8 +1,13 @@
 FullStack Project Proposal
-1. Project Title
-MediConnect – Full Stack Doctor Appointment Booking System
 
-2. Problem Statement
+**MediConnect**
+
+Full Stack Doctor Appointment Booking System
+
+
+
+Problem Statement
+
 MediConnect is a full-stack doctor appointment booking system that allows patients, doctors, and admins to interact through a single platform. Patients can book appointments with doctors, doctors can manage their schedules, and admins can oversee the system.
 
 3. System Architecture
