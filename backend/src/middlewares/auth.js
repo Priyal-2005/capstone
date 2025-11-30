@@ -19,4 +19,6 @@ function isValidToken(req, res, next) {
     }
 }
 
-module.exports = isValidToken;
+module.exports = {
+    isValidToken
+};

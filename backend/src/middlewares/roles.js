@@ -7,4 +7,6 @@ function allowRoles(...role) {
     }
 }
 
-module.exports = allowRoles;
+module.exports = {
+    allowRoles
+};
