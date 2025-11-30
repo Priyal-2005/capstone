@@ -1,7 +1,10 @@
 const prisma = require("../config/prisma");
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const {generateAccessToken, generateRefreshToken} = require("../utils/jwt");
+const { 
+    generateAccessToken, 
+    generateRefreshToken,
+    verifyRefreshToken 
+} = require("../utils/jwt");
 
 // register
 async function register(req, res) {
@@ -20,6 +23,7 @@ async function register(req, res) {
         }
 
         const hash = await bcrypt.hash(password, 10);
+
         await prisma.user.create({
             data: {
                 name,
@@ -44,7 +48,7 @@ async function login(req, res) {
 
         const user = await prisma.user.findUnique({
             where: {email}
-        })
+        });
         if (!user) {
             return res.status(400).json({message: "User not found"});
         }
@@ -59,7 +63,7 @@ async function login(req, res) {
             id: user.id,
             role: user.role
         });
-        
+
         const refreshToken = generateRefreshToken({
             id: user.id,
             role: user.role
@@ -73,15 +77,16 @@ async function login(req, res) {
             name: user.name
         })
     }
-    catch {
+    catch (err) {
+        console.log(err);
         return res.status(500).json({error: "Internal Server Error"});
     }
 }
 
 const refresh = (req, res) => {
-    const {refreshToken} = req.body;
+    const { refreshToken } = req.body;
 
-    const decoded = jwt.verify(refreshToken);
+    const decoded = verifyRefreshToken(refreshToken);
 
     if (!decoded) {
         return res.status(401).json({message: "Invalid refresh token"});
@@ -90,7 +95,7 @@ const refresh = (req, res) => {
     const newAccess = generateAccessToken({
         id: decoded.id,
         role: decoded.role
-    })
+    });
 
     return res.json({
         accessToken: newAccess
@@ -99,5 +104,6 @@ const refresh = (req, res) => {
 
 module.exports = {
     register,
-    login
+    login,
+    refresh
 }
