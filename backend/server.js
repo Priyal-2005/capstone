@@ -83,23 +83,6 @@ app.post("/login", async (req, res) => {
     }
 });
 
-// verify token middleware
-function isValidToken(req, res, next) {
-    try {
-        const authHeader = req.headers.authorization;
-        if (!authHeader) {
-            return res.status(401).json({message: "Authorization header missing"});
-        }
-
-        const token = authHeader.split(" ")[1];
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
-        req.user = decoded;
-        next();
-    }
-    catch (error) {
-        return res.status(401).json({message: "You are not authorizde"});
-    }
-}
 
 // user
 app.get("/user", isValidToken, async (req, res) => {
