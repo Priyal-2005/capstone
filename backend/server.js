@@ -16,7 +16,7 @@ app.use(express.json());
 
 // register
 app.post("/register", async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     try {
         const {name, email, password, role} = req.body;
 
@@ -121,7 +121,7 @@ app.get("/user", isValidToken, async (req, res) => {
         return res.status(200).json({data: user});
     }
     catch (error) {
-        console.error(error); // or debugging
+        console.error(error); // for debugging
         return res.status(500).json({error: "Internal Server Error"});
     }
 })
