@@ -1,12 +1,10 @@
-function allowRoles(...role) {
+function allowRoles(...roles) {
     return (req, res, next) => {
-        if (!allowRoles.includes(req.user.role)) {
+        if (!roles.includes(req.user.role)) {
             return res.status(403).json({message: "Forbidden"});
         }
-        next()
-    }
+        next();
+    };
 }
 
-module.exports = {
-    allowRoles
-};
+module.exports = { allowRoles};

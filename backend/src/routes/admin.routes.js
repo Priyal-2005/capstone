@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const isAuth = require("../middlewares/auth");
-const allowRoles = require("../middlewares/roles");
+const { isAuth } = require("../middlewares/auth");
+const { allowRoles } = require("../middlewares/roles");
 const admin = require("../controllers/admin.controller");
 
 router.use(isAuth, allowRoles("ADMIN"));

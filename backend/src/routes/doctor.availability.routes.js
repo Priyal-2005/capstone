@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const isAuth = require("../middlewares/auth");
-const allowRoles = require("../middlewares/roles");
+const { isAuth } = require("../middlewares/auth");
+const { allowRoles } = require("../middlewares/roles");
 const availability = require("../controllers/doctor.availability.controller");
 
 router.use(isAuth, allowRoles("DOCTOR"));
