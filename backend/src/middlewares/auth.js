@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { verifyAccessToken } = require("../utils/jwt");
 
 function isAuth(req, res, next) {
     try {
@@ -11,10 +12,13 @@ function isAuth(req, res, next) {
         if (!token) {
             return res.status(401).json({ message: "Invalid token format" });
         }
+        const decoded = verifyAccessToken(token);
 
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        if (!decoded) {
+            return res.status(401).json({ message: "Invalid or expired token" });
+        }
+
         req.user = decoded;
-        
         next()
     }
     catch (error) {

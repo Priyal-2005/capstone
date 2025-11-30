@@ -1,7 +1,9 @@
 const prisma = require("../config/prisma");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const {generateAccessToken, generateRefreshToken} = require("../utils/jwt");
 
+// register
 async function register(req, res) {
     try {
         const {name, email, password, role} = req.body;
@@ -35,6 +37,7 @@ async function register(req, res) {
     }
 }
 
+// login
 async function login(req, res) {
     try {
         const {email, password} = req.body;
@@ -51,13 +54,21 @@ async function login(req, res) {
             return res.status(400).json({message: "Invalid credentials"});
         }
 
-        const token = jwt.sign(
-            {id: user.id, role: user.role}, process.env.SECRET_KEY, {expiresIn: '2h'}
-        )
+        // Generate tokens
+        const accessToken = generateAccessToken({
+            id: user.id,
+            role: user.role
+        });
+        
+        const refreshToken = generateRefreshToken({
+            id: user.id,
+            role: user.role
+        });
 
-        res.json({
+        return res.json({
             message: "Login successful",
-            token,
+            accessToken,
+            refreshToken,
             role: user.role,
             name: user.name
         })
@@ -65,6 +76,25 @@ async function login(req, res) {
     catch {
         return res.status(500).json({error: "Internal Server Error"});
     }
+}
+
+const refresh = (req, res) => {
+    const {refreshToken} = req.body;
+
+    const decoded = jwt.verify(refreshToken);
+
+    if (!decoded) {
+        return res.status(401).json({message: "Invalid refresh token"});
+    }
+
+    const newAccess = generateAccessToken({
+        id: decoded.id,
+        role: decoded.role
+    })
+
+    return res.json({
+        accessToken: newAccess
+    });
 }
 
 module.exports = {
