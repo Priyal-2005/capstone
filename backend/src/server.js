@@ -12,5 +12,6 @@ app.use("/auth", require("./routes/auth.routes"));
 app.use("/user", require("./routes/user.routes"));
 app.use("/doctors", require("./routes/doctor.routes"));
 app.use("/appointments", require("./routes/appointment.routes"));
+app.use("/doctor/appointments", require("./routes/doctor.appointment.routes"));
 
 app.listen(8000, () => console.log("Running on http://localhost:8000"));
