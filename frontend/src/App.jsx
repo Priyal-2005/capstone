@@ -6,6 +6,15 @@ import PatientDashboard from "./pages/PatientDashboard";
 import DoctorDashboard from "./pages/DoctorDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 
+import UpcomingAppointments from "./pages/patient/UpcomingAppointments";
+import PastAppointments from "./pages/patient/PastAppointments";
+import AllDoctors from "./pages/patient/AllDoctors";
+
+import DoctorAppointments from "./pages/doctor/DoctorAppointments";
+
+import ManageDoctors from "./pages/admin/ManageDoctors";
+import ManageAppointments from "./pages/admin/ManageAppointments";
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -22,6 +31,33 @@ export default function App() {
         />
 
         <Route
+          path="/patient/upcoming"
+          element={
+            <ProtectedRoute allowedRoles={["PATIENT"]}>
+              <UpcomingAppointments />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/patient/past"
+          element={
+            <ProtectedRoute allowedRoles={["PATIENT"]}>
+              <PastAppointments />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/patient/doctors"
+          element={
+            <ProtectedRoute allowedRoles={["PATIENT"]}>
+              <AllDoctors />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/doctor"
           element={
             <ProtectedRoute allowedRoles={["DOCTOR"]}>
@@ -31,10 +67,37 @@ export default function App() {
         />
 
         <Route
+          path="/doctor/appointments"
+          element={
+            <ProtectedRoute allowedRoles={["DOCTOR"]}>
+              <DoctorAppointments />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/admin"
           element={
             <ProtectedRoute allowedRoles={["ADMIN"]}>
               <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/manage-doctors"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <ManageDoctors />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/manage-appointments"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <ManageAppointments />
             </ProtectedRoute>
           }
         />

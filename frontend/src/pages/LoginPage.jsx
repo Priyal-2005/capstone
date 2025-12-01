@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../styles/login.css";
 
 axios.defaults.withCredentials = true; 
 axios.defaults.baseURL = "http://localhost:8000";
@@ -29,25 +30,29 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="login-container">
+      <div className="login-card">
+        <h2 className="login-title">Login</h2>
 
-      <form onSubmit={submit}>
-        <input 
-          placeholder="email" 
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <form onSubmit={submit} className="login-form">
+          <input 
+            className="login-input"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <input 
-          placeholder="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <input 
+            className="login-input"
+            placeholder="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <button>Login</button>
-      </form>
+          <button className="login-btn">Login</button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AppointmentList from "../components/patient/AppointmentList";
+import "../styles/patient.css";
 
 axios.defaults.withCredentials = true;
-
-// upcoming appointments + logout + navigation
 
 export default function PatientDashboard() {
   const [appointments, setAppointments] = useState([]);
@@ -13,27 +12,25 @@ export default function PatientDashboard() {
     axios.get("/appointments/upcoming").then(res => setAppointments(res.data.data));
   }, []);
 
-
   const logout = async () => {
     await axios.post("/auth/logout");
     localStorage.clear();
     window.location.href = "/login";
   };
 
-
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Welcome, {localStorage.getItem("name")}</h2>
+    <div className="page-container">
+      <div className="page-title">Welcome, {localStorage.getItem("name")}</div>
 
-      <div style={{ marginBottom: 20 }}>
+      <div className="nav-buttons">
         <button onClick={() => window.location.href = "/patient/upcoming"}>Upcoming</button>
-        <button onClick={() => window.location.href = "/patient/past"} style={{ marginLeft: 10 }}>Past Appointments</button>
-        <button onClick={() => window.location.href = "/patient/doctors"} style={{ marginLeft: 10 }}>See All Doctors</button>
-        <button onClick={logout} style={{ marginLeft: 10 }}>Logout</button>
+        <button onClick={() => window.location.href = "/patient/past"}>Past</button>
+        <button onClick={() => window.location.href = "/patient/doctors"}>Doctors</button>
+        <button onClick={logout}>Logout</button>
       </div>
 
+      <h3>Upcoming Appointments</h3>
       <AppointmentList appointments={appointments} />
-
     </div>
   );
 }

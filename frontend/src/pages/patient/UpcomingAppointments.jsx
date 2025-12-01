@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "../../styles/patient.css";
 
 axios.defaults.withCredentials = true;
 
@@ -23,27 +24,45 @@ export default function UpcomingAppointments() {
   if (loading) return <div style={{ padding: 20 }}>Loading...</div>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Upcoming Appointments</h2>
+    <div className="page-container">
+      <h2 className="page-title">Upcoming Appointments</h2>
 
       {appointments.length === 0 ? (
         <p>No upcoming appointments.</p>
       ) : (
-        <ul>
+        <div>
           {appointments.map((a) => (
-            <li key={a.id}>
-              <strong>Doctor:</strong> {a.doctor.user.name}
-              <br />
-              <strong>Date:</strong> {new Date(a.dateTime).toLocaleString()}
-              <br />
-              <strong>Status:</strong> {a.status}
-              <hr />
-            </li>
+            <div key={a.id} className="card">
+              <div className="appointment-title">
+                Dr. {a.doctor.user.name}
+              </div>
+
+              <div className="info-row">
+                <strong>Date:</strong> {new Date(a.dateTime).toLocaleString()}
+              </div>
+
+              <div className="info-row">
+                <strong>Status:</strong>
+                {a.status === "APPROVED" && (
+                  <span className="status-badge status-approved">Approved</span>
+                )}
+                {a.status === "PENDING" && (
+                  <span className="status-badge status-pending">Pending</span>
+                )}
+                {a.status === "DECLINED" && (
+                  <span className="status-badge status-declined">Declined</span>
+                )}
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
 
-      <button onClick={() => window.location.href = "/patient"} style={{ marginTop: 20 }}>
+      <button
+        className="primary-btn"
+        onClick={() => (window.location.href = "/patient")}
+        style={{ marginTop: 20 }}
+      >
         Back to Dashboard
       </button>
     </div>

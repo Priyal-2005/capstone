@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BookingForm from "../../components/patient/BookingForm";
+import "../../styles/patient.css";
 
 axios.defaults.withCredentials = true;
 
@@ -13,124 +14,61 @@ export default function AllDoctors() {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const limit = 5;
 
-  const fetchDoctors = () => {
-    axios
-      .get("/doctors", {
-        params: {
-          search,
-          specialization,
-          page,
-          limit
-        }
-      })
-      .then((res) => {
-        setDoctors(res.data.data);
-        setTotal(res.data.total); // backend gives total doctors count
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  const loadDoctors = () => {
+    axios.get("/doctors", {
+      params: { search, specialization, page, limit }
+    }).then(res => {
+      setDoctors(res.data.data);
+      setTotal(res.data.total);
+    });
   };
 
-  useEffect(() => {
-    fetchDoctors();
-  }, [page, search, specialization]);
-
-  // Booking handler
-  const handleBooking = async (date, time) => {
-    if (!date || !time) {
-      alert("Please select date and time");
-      return;
-    }
-
-    const dateTime = new Date(`${date}T${time}:00`).toISOString();
-
-    try {
-      await axios.post("/appointments/book", {
-        doctorId: selectedDoctor.id,
-        dateTime
-      });
-
-      alert("Appointment booked!");
-      setSelectedDoctor(null);
-    } catch (err) {
-      alert(err.response?.data?.message || "Booking failed");
-    }
-  };
+  useEffect(() => { loadDoctors(); }, [page, search, specialization]);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>All Doctors</h2>
+    <div className="page-container">
+      <h2>Doctors</h2>
 
-      {/* Search + Filter Section */}
-      <div style={{ display: "flex", marginBottom: 20 }}>
+      <div className="nav-buttons">
         <input
-          placeholder="Search doctors..."
+          placeholder="Search..."
           value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setPage(1);
-          }}
-          style={{ marginRight: 10 }}
+          onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+          style={{ padding: 8, borderRadius: 6, border: "1px solid #ccc" }}
         />
 
         <select
           value={specialization}
-          onChange={(e) => {
-            setSpecialization(e.target.value);
-            setPage(1);
-          }}
+          onChange={(e) => { setSpecialization(e.target.value); setPage(1); }}
+          style={{ padding: 8, borderRadius: 6 }}
         >
-          <option value="">All Specializations</option>
+          <option value="">All</option>
           <option value="Cardiology">Cardiology</option>
           <option value="Dermatology">Dermatology</option>
-          <option value="Pediatrics">Pediatrics</option>
           <option value="Neurology">Neurology</option>
+          <option value="Pediatrics">Pediatrics</option>
         </select>
       </div>
 
-      {/* Doctors List */}
-      <ul>
-        {doctors.map((d) => (
-          <li key={d.id} style={{ marginBottom: 10 }}>
-            <strong>{d.user.name}</strong> — {d.specialization}
-            <button
-              style={{ marginLeft: 10 }}
-              onClick={() => setSelectedDoctor(d)}
-            >
-              Book
-            </button>
-          </li>
-        ))}
-      </ul>
+      {doctors.map(doc => (
+        <div key={doc.id} className="card">
+          <div className="appointment-title">{doc.user.name}</div>
+          <div className="info-row"><strong>{doc.specialization}</strong></div>
 
-      {/* Pagination */}
-      <div style={{ marginTop: 20 }}>
-        <button 
-          disabled={page === 1} 
-          onClick={() => setPage(page - 1)}
-        >
-          Previous
-        </button>
+          <button
+            className="primary-btn"
+            onClick={() => setSelectedDoctor(doc)}
+          >
+            Book
+          </button>
+        </div>
+      ))}
 
-        <span style={{ margin: "0 10px" }}>
-          Page {page}
-        </span>
-
-        <button 
-          disabled={page * limit >= total} 
-          onClick={() => setPage(page + 1)}
-        >
-          Next
-        </button>
-      </div>
-
-      {/* Booking Form */}
       {selectedDoctor && (
         <BookingForm
           doctor={selectedDoctor}
-          onSubmit={handleBooking}
           onCancel={() => setSelectedDoctor(null)}
+          onSubmit={(date, time) => {}}
         />
       )}
     </div>
