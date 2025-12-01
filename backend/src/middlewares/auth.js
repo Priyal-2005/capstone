@@ -3,14 +3,9 @@ const { verifyAccessToken } = require("../utils/jwt");
 
 function isAuth(req, res, next) {
     try {
-        const authHeader = req.headers.authorization;
-        if (!authHeader) {
-            return res.status(401).json({message: "No token provided"})
-        }
-
-        const token = authHeader.split(" ")[1];
+        const token = req.cookies.accessToken;
         if (!token) {
-            return res.status(401).json({ message: "Invalid token format" });
+            return res.status(401).json({ message: "No access token" });
         }
         const decoded = verifyAccessToken(token);
 

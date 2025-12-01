@@ -73,10 +73,22 @@ async function login(req, res) {
             role: user.role
         });
 
+        res.cookie("accessToken", accessToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            maxAge: 1000 * 60 * 30
+        });
+
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            maxAge: 1000 * 60 * 60 * 24 * 7
+        });
+
         return res.json({
             message: "Login successful",
-            accessToken,
-            refreshToken,
             role: user.role,
             name: user.name
         })
@@ -87,27 +99,45 @@ async function login(req, res) {
     }
 }
 
+// refresh
 const refresh = (req, res) => {
-    const { refreshToken } = req.body;
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+        return res.status(401).json({ message: "No refresh token" });
+    }
 
     const decoded = verifyRefreshToken(refreshToken);
 
     if (!decoded) {
-        return res.status(401).json({message: "Invalid refresh token"});
+        return res.status(401).json({ message: "Invalid refresh token" });
     }
 
-    const newAccess = generateAccessToken({
+    const newAccessToken = generateAccessToken({
         id: decoded.id,
         role: decoded.role
     });
 
-    return res.json({
-        accessToken: newAccess
+    res.cookie("accessToken", newAccessToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        maxAge: 1000 * 60 * 15
     });
-}
+
+    return res.json({ message: "Access token refreshed" });
+};
+
+// logout
+const logout = (req, res) => {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    return res.json({ message: "Logged out successfully" });
+};
 
 module.exports = {
     register,
     login,
-    refresh
+    refresh,
+    logout
 }
