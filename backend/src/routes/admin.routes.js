@@ -9,6 +9,7 @@ router.post("/doctors", admin.createDoctor);
 router.get("/doctors", admin.getAllDoctors);
 router.put("/doctors/:id", admin.updateDoctor);
 router.delete("/doctors/:id", admin.deleteDoctor);
+router.delete("/appointments/:id", admin.deleteAppointment);
 
 router.get("/appointments", admin.getAllAppointments);
 

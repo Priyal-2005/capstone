@@ -130,10 +130,34 @@ const getAllAppointments = async (req, res) => {
   }
 };
 
+const deleteAppointment = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+
+    const appointment = await prisma.appointment.findUnique({
+      where: {id}
+    })
+
+    if (!appointment) {
+      return res.status(404).json({message: "Appointment not found"});
+    }
+
+    await prisma.appointment.delete({
+      where: {id}
+    });
+    return res.json({message: "Appointment deleted"});
+  }
+  catch (error) {
+    console.log(error);
+    return res.status(500).json({error: "Internal Server Error"});
+  }
+}
+
 module.exports = {
     createDoctor,
     getAllDoctors,
     updateDoctor,
     deleteDoctor,
-    getAllAppointments
+    getAllAppointments,
+    deleteAppointment
 };
