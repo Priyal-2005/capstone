@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import AppointmentList from "../components/patient/AppointmentList";
-import "../styles/patient.css";
+import AppointmentList from "../../components/patient/AppointmentList";
+import "../../styles/patient.css";
 
 axios.defaults.withCredentials = true;
 

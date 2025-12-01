@@ -1,4 +1,4 @@
-import "../styles/patient.css";
+import "../../styles/patient.css";
 
 export default function AppointmentList({ appointments }) {
   if (!appointments || appointments.length === 0) {
