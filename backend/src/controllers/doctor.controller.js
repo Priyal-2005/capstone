@@ -19,13 +19,13 @@ const getDoctorList = async (req, res) => {
         // Filters
         const where = {
             AND: [
-              specialization ? { specialization: { contains: specialization, mode: "insensitive" } } : {},
+              specialization ? { specialization: { contains: specialization } } : {},
               search
                 ? {
                     OR: [
-                      { specialization: { contains: search, mode: "insensitive" } },
-                      { user: { name: { contains: search, mode: "insensitive" } } },
-                      { user: { email: { contains: search, mode: "insensitive" } } }
+                      { specialization: { contains: search } },
+                      { user: { name: { contains: search } } },
+                      { user: { email: { contains: search } } }
                     ]
                   }
                 : {}
