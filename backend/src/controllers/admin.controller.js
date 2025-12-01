@@ -1,4 +1,5 @@
 const prisma = require("../config/prisma");
+const bcrypt = require("bcrypt");
 
 const createDoctor = async (req, res) => {
   try {
@@ -11,12 +12,14 @@ const createDoctor = async (req, res) => {
       return res.status(400).json({message: "User with this email already exists"});
     }
 
+    const hash = await bcrypt.hash(password, 10);
+
     // Create User with role DOCTOR
     const user = await prisma.user.create({
       data: {
         name,
         email,
-        password,
+        password: hash,
         role: "DOCTOR"
       }
     });
@@ -108,7 +111,16 @@ const deleteDoctor = async (req, res) => {
 const getAllAppointments = async (req, res) => {
   try {
     const appts = await prisma.appointment.findMany({
-      include: {patient: true, doctor: true}
+      include: {
+        patient: true,
+        doctor: {
+          include: {
+            user: {
+              select: { name: true, email: true }
+            }
+          }
+        }
+      }
     });
 
     return res.json({data: appts});

@@ -20,16 +20,19 @@ const getTodayAppointments = async(req, res) => {
 
         const appointments = await prisma.appointment.findMany({
             where: {
-                doctorId: doctor.id,
-                dateTime: {
-                    gte: today,
-                    lt: tomorrow
-                }
-            },
-            include:{
-                patient: true
-            }
-        })
+              doctorId: doctor.id,
+              dateTime: {
+                gte: today,
+                lt: tomorrow
+            }},
+            orderBy: { dateTime: 'asc' },
+            include: {
+              patient: {select:{
+                id: true,
+                name: true,
+                email: true
+            }}}
+          });
 
         return res.json({data: appointments})
     }
@@ -82,8 +85,12 @@ const getUpcomingAppointments = async(req, res) => {
 
         const appointments = await prisma.appointment.findMany({
             where: {
-                doctorId: doctor.id,
-                dateTime: {gte: new Date()}
+              doctorId: doctor.id,
+              dateTime: {gte: new Date()}
+            },
+            orderBy: {dateTime: 'asc'},
+            include: {
+              patient: { select: { id: true, name: true, email: true } }
             }
         });
 

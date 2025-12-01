@@ -11,8 +11,12 @@ async function register(req, res) {
     try {
         const {name, email, password, role} = req.body;
 
-        if (!name || !email || !password || !role) {
+        if (!name || !email || !password) {
             return res.status(400).json({message: "Please provide all required fields"});
+        }
+
+        if (role && role.toUpperCase() === "DOCTOR") {
+            return res.status(403).json({ message: "Doctors must be created by an admin" });
         }
 
         const exists = await prisma.user.findUnique({
