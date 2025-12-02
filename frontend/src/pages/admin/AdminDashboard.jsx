@@ -1,12 +1,10 @@
 import React from "react";
 import "../../styles/admin.css";
+import axios from "axios";
 
 export default function AdminDashboard() {
   const logout = async () => {
-    await fetch("http://localhost:8000/auth/logout", {
-      method: "POST",
-      credentials: "include"
-    });
+    await axios.post("/auth/logout");
     localStorage.clear();
     window.location.href = "/login";
   };

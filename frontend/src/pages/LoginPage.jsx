@@ -3,9 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
 
-axios.defaults.withCredentials = true; 
-axios.defaults.baseURL = "http://localhost:8000";
-
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");

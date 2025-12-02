@@ -3,8 +3,6 @@ import axios from "axios";
 import AppointmentList from "../../components/patient/AppointmentList";
 import "../../styles/patient.css";
 
-axios.defaults.withCredentials = true;
-
 export default function PatientDashboard() {
   const [appointments, setAppointments] = useState([]);
 

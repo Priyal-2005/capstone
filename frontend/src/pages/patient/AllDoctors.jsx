@@ -3,8 +3,6 @@ import axios from "axios";
 import BookingForm from "../../components/patient/BookingForm";
 import "../../styles/patient.css";
 
-axios.defaults.withCredentials = true;
-
 export default function AllDoctors() {
   const [doctors, setDoctors] = useState([]);
   const [search, setSearch] = useState("");

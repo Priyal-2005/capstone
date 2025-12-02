@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/doctor.css";
 
-axios.defaults.withCredentials = true;
-
 export default function DoctorUpcoming() {
   const [appointments, setAppointments] = useState([]);
   const [filtered, setFiltered] = useState([]);
