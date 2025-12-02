@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import BookingForm from "../../components/patient/BookingForm";
 import "../../styles/patient.css";
@@ -14,16 +14,20 @@ export default function AllDoctors() {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const limit = 5;
 
-  const loadDoctors = () => {
-    axios.get("/doctors", {
-      params: { search, specialization, page, limit }
-    }).then(res => {
-      setDoctors(res.data.data);
-      setTotal(res.data.total);
-    });
-  };
+  const loadDoctors = useCallback(() => {
+    axios
+      .get("/doctors", {
+        params: { search, specialization, page, limit },
+      })
+      .then((res) => {
+        setDoctors(res.data.data);
+        setTotal(res.data.total);
+      });
+  }, [search, specialization, page]);
 
-  useEffect(() => { loadDoctors(); }, [page, search, specialization]);
+  useEffect(() => {
+    loadDoctors();
+  }, [loadDoctors]);
 
   return (
     <div className="page-container">
