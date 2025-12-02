@@ -42,7 +42,8 @@ const getDoctorList = async (req, res) => {
                     select: {
                         id: true,
                         name: true,
-                        email: true
+                        email: true,
+                        phone: true
                     }
                 }
             }
@@ -70,7 +71,7 @@ const getDoctorById = async (req, res) => {
         where: { id },
         include: {
             user: {
-            select: { id: true, name: true, email: true }
+            select: { id: true, name: true, email: true, phone: true }
             }}
         })
         if (!doctor) {

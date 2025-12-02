@@ -6,7 +6,6 @@ async function main() {
 
   // Clear existing data first (optional but recommended for testing)
   await prisma.appointment.deleteMany();
-  await prisma.availability.deleteMany();
   await prisma.doctor.deleteMany();
   await prisma.user.deleteMany();
 
@@ -16,6 +15,7 @@ async function main() {
       name: "Admin User",
       email: "admin@test.com",
       password: await bcrypt.hash("123456", 10),
+      phone: "9999999999",
       role: "ADMIN"
     }
   });
@@ -27,6 +27,7 @@ async function main() {
         name: "Patient One",
         email: "p1@test.com",
         password: await bcrypt.hash("123456", 10),
+        phone: "9000000001",
         role: "PATIENT"
       }
     }),
@@ -35,6 +36,7 @@ async function main() {
         name: "Patient Two",
         email: "p2@test.com",
         password: await bcrypt.hash("123456", 10),
+        phone: "9000000002",
         role: "PATIENT"
       }
     }),
@@ -43,6 +45,7 @@ async function main() {
         name: "Patient Three",
         email: "p3@test.com",
         password: await bcrypt.hash("123456", 10),
+        phone: "9000000003",
         role: "PATIENT"
       }
     }),
@@ -51,6 +54,7 @@ async function main() {
         name: "Patient Four",
         email: "p4@test.com",
         password: await bcrypt.hash("123456", 10),
+        phone: "9000000004",
         role: "PATIENT"
       }
     })
@@ -63,6 +67,7 @@ async function main() {
         name: "Dr John",
         email: "doctor1@test.com",
         password: await bcrypt.hash("123456", 10),
+        phone: "8000000001",
         role: "DOCTOR"
       }
     }),
@@ -71,6 +76,7 @@ async function main() {
         name: "Dr Sarah",
         email: "doctor2@test.com",
         password: await bcrypt.hash("123456", 10),
+        phone: "8000000002",
         role: "DOCTOR"
       }
     })
@@ -89,26 +95,6 @@ async function main() {
       specialization: "Dermatology"
     }
   });
-
-  // Create some availability for doctors
-  await prisma.$transaction([
-    prisma.availability.create({
-      data: {
-        doctorId: doctor1.id,
-        dayOfWeek: 1,
-        startTime: "10:00",
-        endTime: "14:00"
-      }
-    }),
-    prisma.availability.create({
-      data: {
-        doctorId: doctor2.id,
-        dayOfWeek: 2,
-        startTime: "09:00",
-        endTime: "12:00"
-      }
-    })
-  ]);
 
   // Add sample appointments
   await prisma.appointment.create({

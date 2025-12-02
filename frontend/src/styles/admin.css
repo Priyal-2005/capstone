@@ -1,0 +1,156 @@
+.admin-container {
+    padding: 25px;
+    max-width: 1000px;
+    margin: auto;
+    font-family: 'Inter', sans-serif;
+    color: #2e2a47;
+  }
+  
+  .admin-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #5a4fcf;
+    margin-bottom: 20px;
+  }
+  
+  .admin-topbar {
+    background: #f4f1ff;
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid #e8e4ff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  
+  .logout-btn {
+    background: #ff5c5c;
+    padding: 8px 14px;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+  
+  .logout-btn:hover {
+    background: #e04646;
+  }
+  
+  .admin-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+  
+  .admin-nav button {
+    background: #6c63ff;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+  
+  .admin-nav button:hover {
+    background: #564cd6;
+  }
+  
+  .admin-card {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    border: 1px solid #ece7ff;
+    margin-bottom: 18px;
+  }
+  
+  .admin-form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    border: 1px solid #e6e1ff;
+    margin-bottom: 25px;
+  }
+  
+  .admin-form input {
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #cecaff;
+    margin-bottom: 12px;
+    background: #faf8ff;
+    transition: 0.25s;
+  }
+  
+  .admin-form input:focus {
+    border-color: #6c63ff;
+    outline: none;
+    box-shadow: 0 0 6px rgba(108, 99, 255, 0.4);
+  }
+  
+  .admin-form button {
+    background: #6c63ff;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+  
+  .admin-form button:hover {
+    background: #564cd6;
+  }
+  
+  .edit-btn {
+    background: #1cc88a;
+    padding: 8px 14px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s;
+    font-weight: 600;
+  }
+  
+  .edit-btn:hover {
+    background: #15a976;
+  }
+  
+  .delete-btn {
+    background: #e74a3b;
+    padding: 8px 14px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s;
+    font-weight: 600;
+  }
+  
+  .delete-btn:hover {
+    background: #cf3a2a;
+  }
+  
+  .back-btn {
+    margin-top: 20px;
+    background: #6c63ff;
+    padding: 10px 16px;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .back-btn:hover {
+    background: #564cd6;
+  }

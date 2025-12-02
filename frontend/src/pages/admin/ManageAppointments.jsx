@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "../../styles/admin.css";
 
 axios.defaults.withCredentials = true;
 
@@ -32,43 +33,46 @@ export default function ManageAppointments() {
     }
   };
 
-  if (loading) return <div style={{ padding: 20 }}>Loading...</div>;
+  if (loading) return <div className="admin-container">Loading...</div>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Manage Appointments</h2>
+    <div className="admin-container">
+      <h2 className="admin-title">Manage Appointments</h2>
+
+      <div className="admin-nav">
+        <button onClick={() => (window.location.href = "/admin")}>
+          Back to Dashboard
+        </button>
+      </div>
 
       {appointments.length === 0 ? (
         <p>No appointments found.</p>
       ) : (
-        <ul>
-          {appointments.map((a) => (
-            <li key={a.id} style={{ marginBottom: 15 }}>
-              <strong>Patient:</strong> {a.patient.name} <br />
-              <strong>Doctor:</strong> {a.doctor.user.name} <br />
-              <strong>Date:</strong> {new Date(a.dateTime).toLocaleString()} <br />
+        appointments.map((a) => (
+          <div key={a.id} className="admin-card">
+            <div className="info-row">
+              <strong>Patient:</strong> {a.patient.name}
+            </div>
+            <div className="info-row">
+              <strong>Doctor:</strong> {a.doctor.user.name}
+            </div>
+            <div className="info-row">
+              <strong>Date:</strong> {new Date(a.dateTime).toLocaleString()}
+            </div>
+            <div className="info-row">
               <strong>Status:</strong> {a.status}
+            </div>
 
-              <div style={{ marginTop: 5 }}>
-                <button
-                  onClick={() => handleDeleteAppointment(a.id)}
-                  style={{ background: "red", color: "white" }}
-                >
-                  Delete
-                </button>
-              </div>
-              <hr />
-            </li>
-          ))}
-        </ul>
+            <button
+              className="delete-btn"
+              style={{ marginTop: 10 }}
+              onClick={() => handleDeleteAppointment(a.id)}
+            >
+              Delete
+            </button>
+          </div>
+        ))
       )}
-
-      <button
-        onClick={() => (window.location.href = "/admin")}
-        style={{ marginTop: 20 }}
-      >
-        Back to Dashboard
-      </button>
     </div>
   );
 }

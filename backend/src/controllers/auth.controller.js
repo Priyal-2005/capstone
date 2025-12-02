@@ -9,9 +9,9 @@ const {
 // register
 async function register(req, res) {
     try {
-        const {name, email, password, role} = req.body;
+        const {name, email, password, phone, role} = req.body;
 
-        if (!name || !email || !password) {
+        if (!name || !email || !password || !phone) {
             return res.status(400).json({message: "Please provide all required fields"});
         }
 
@@ -33,6 +33,7 @@ async function register(req, res) {
                 name,
                 email,
                 password: hash,
+                phone,
                 role: role?.toUpperCase() || "PATIENT"
             }
         });

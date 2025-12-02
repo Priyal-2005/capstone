@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "../../styles/admin.css";
 
 axios.defaults.withCredentials = true;
 
@@ -107,25 +108,26 @@ export default function ManageDoctors() {
   if (loading) return <div style={{ padding: 20 }}>Loading...</div>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Manage Doctors</h2>
+    <div className="admin-container">
+      <h2 className="admin-title">Manage Doctors</h2>
 
       {/* ADD / EDIT FORM */}
-      <form onSubmit={editMode ? handleUpdateDoctor : handleAddDoctor} style={{ marginBottom: 20 }}>
+      <form
+        onSubmit={editMode ? handleUpdateDoctor : handleAddDoctor}
+        className="admin-form"
+      >
         <h3>{editMode ? "Edit Doctor" : "Add Doctor"}</h3>
 
         <input
           placeholder="Doctor Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          style={{ display: "block", marginBottom: 10 }}
         />
 
         <input
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          style={{ display: "block", marginBottom: 10 }}
         />
 
         {!editMode && (
@@ -134,7 +136,6 @@ export default function ManageDoctors() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ display: "block", marginBottom: 10 }}
           />
         )}
 
@@ -142,14 +143,16 @@ export default function ManageDoctors() {
           placeholder="Specialization"
           value={specialization}
           onChange={(e) => setSpecialization(e.target.value)}
-          style={{ display: "block", marginBottom: 10 }}
         />
 
-        <button type="submit">{editMode ? "Update" : "Add"} Doctor</button>
+        <button type="submit">
+          {editMode ? "Update" : "Add"} Doctor
+        </button>
 
         {editMode && (
           <button
             type="button"
+            className="delete-btn"
             onClick={() => {
               setEditMode(false);
               setEditId(null);
@@ -166,28 +169,37 @@ export default function ManageDoctors() {
       </form>
 
       {/* DOCTOR LIST */}
-      <h3>Existing Doctors</h3>
-      <ul>
-        {doctors.map((doc) => (
-          <li key={doc.id} style={{ marginBottom: 10 }}>
-            <strong>{doc.user.name}</strong> — {doc.specialization} <br />
-            <strong>Email:</strong> {doc.user.email}
+      <h3 className="admin-title" style={{ fontSize: 24 }}>Existing Doctors</h3>
 
-            <div style={{ marginTop: 5 }}>
-              <button onClick={() => handleEditDoctor(doc)}>Edit</button>
-              <button
-                onClick={() => handleDeleteDoctor(doc.id)}
-                style={{ marginLeft: 10 }}
-              >
-                Delete
-              </button>
-            </div>
-            <hr />
-          </li>
-        ))}
-      </ul>
+      {doctors.map((doc) => (
+        <div key={doc.id} className="admin-card">
+          <div className="info-row"><strong>{doc.user.name}</strong></div>
+          <div className="info-row"><strong>Email:</strong> {doc.user.email}</div>
+          <div className="info-row"><strong>Specialization:</strong> {doc.specialization}</div>
 
-      <button onClick={() => (window.location.href = "/admin")} style={{ marginTop: 20 }}>
+          <div style={{ marginTop: 10 }}>
+            <button
+              className="edit-btn"
+              onClick={() => handleEditDoctor(doc)}
+            >
+              Edit
+            </button>
+
+            <button
+              className="delete-btn"
+              onClick={() => handleDeleteDoctor(doc.id)}
+              style={{ marginLeft: 10 }}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      ))}
+
+      <button
+        className="back-btn"
+        onClick={() => (window.location.href = "/admin")}
+      >
         Back to Dashboard
       </button>
     </div>

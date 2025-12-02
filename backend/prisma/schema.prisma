@@ -18,6 +18,7 @@ model User {
   name      String
   email     String   @unique
   password  String
+  phone     String?
   role      Role     @default(PATIENT)
   createdAt DateTime @default(now())
 
@@ -32,7 +33,6 @@ model Doctor {
 
   specialization String
   appointments   Appointment[]
-  availability   Availability[]
 }
 
 model Appointment {
@@ -59,14 +59,4 @@ enum Status {
   APPROVED
   DECLINED
   COMPLETED
-}
-
-model Availability {
-  id       Int    @id @default(autoincrement())
-  doctor   Doctor @relation(fields: [doctorId], references: [id])
-  doctorId Int
-
-  dayOfWeek Int
-  startTime String
-  endTime   String
 }

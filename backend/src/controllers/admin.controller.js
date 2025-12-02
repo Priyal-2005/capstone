@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 const createDoctor = async (req, res) => {
   try {
-    const {name, email, password, specialization} = req.body;
+    const {name, email, password, phone, specialization} = req.body;
 
     const existingUser = await prisma.user.findUnique({
         where: {email}
@@ -20,6 +20,7 @@ const createDoctor = async (req, res) => {
         name,
         email,
         password: hash,
+        phone,
         role: "DOCTOR"
       }
     });
@@ -58,7 +59,7 @@ const getAllDoctors = async (req, res) => {
 const updateDoctor = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    const {name, email, specialization} = req.body;
+    const {name, email, phone, specialization} = req.body;
 
     // Update both User and Doctor tables
     const doctor = await prisma.doctor.update({
@@ -68,7 +69,7 @@ const updateDoctor = async (req, res) => {
 
     await prisma.user.update({
       where: {id: doctor.userId},
-      data: {name, email}
+      data: {name, email, phone}
     });
 
     return res.json({message: "Doctor updated", data: doctor});
@@ -116,7 +117,7 @@ const getAllAppointments = async (req, res) => {
         doctor: {
           include: {
             user: {
-              select: { name: true, email: true }
+              select: { name: true, email: true, phone: true }
             }
           }
         }

@@ -1,4 +1,5 @@
 import React from "react";
+import "../../styles/admin.css";
 
 export default function AdminDashboard() {
   const logout = async () => {
@@ -11,17 +12,24 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Admin Dashboard</h2>
+    <div className="admin-container">
+      <h2 className="admin-title">Admin Dashboard</h2>
 
-      <div style={{ marginBottom: 20 }}>
+      <div className="admin-topbar">
         <strong>Welcome, {localStorage.getItem("name")}</strong>
-        <button onClick={logout} style={{ marginLeft: 15 }}>Logout</button>
+        <button className="logout-btn" onClick={logout}>
+          Logout
+        </button>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        <button onClick={() => (window.location.href = "/admin/manage-doctors")}>Manage Doctors</button>
-        <button onClick={() => (window.location.href = "/admin/manage-appointments")}>Manage Appointments</button>
+      <div className="admin-nav">
+        <button onClick={() => (window.location.href = "/admin/manage-doctors")}>
+          Manage Doctors
+        </button>
+
+        <button onClick={() => (window.location.href = "/admin/manage-appointments")}>
+          Manage Appointments
+        </button>
       </div>
     </div>
   );

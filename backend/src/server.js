@@ -29,12 +29,6 @@ app.use("/appointments", require("./routes/appointment.routes"));
 // today, upcoming, approve/decline appointments for doctor
 app.use("/doctor/appointments", require("./routes/doctor.appointment.routes"));
 
-// doctor profile
-app.use("/doctor/profile", require("./routes/doctor.profile.routes"));
-
-// doctor availability
-app.use("/doctor/availability", require("./routes/doctor.availability.routes"));
-
 // admin routes
 app.use("/admin", require("./routes/admin.routes"));
 

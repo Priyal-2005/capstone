@@ -45,8 +45,7 @@ export default function AllDoctors() {
           <option value="">All</option>
           <option value="Cardiology">Cardiology</option>
           <option value="Dermatology">Dermatology</option>
-          <option value="Neurology">Neurologist
-          </option>
+          <option value="Neurology">Neurologist</option>
           <option value="Oncologist">Oncologist</option>
           <option value="Gynecologist">Gynecologist</option>
         </select>

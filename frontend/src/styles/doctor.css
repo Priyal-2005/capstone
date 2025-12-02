@@ -1,0 +1,135 @@
+.doctor-container {
+    padding: 25px;
+    max-width: 900px;
+    margin: auto;
+    font-family: "Inter", sans-serif;
+    color: #2e2a47;
+  }
+  
+  .doctor-title {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #5a4fcf;
+  }
+  
+  .doctor-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f4f1ff;
+    padding: 12px 18px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border: 1px solid #e8e4ff;
+  }
+  
+  .logout-btn {
+    background: #ff5c5c;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.25s;
+  }
+  
+  .logout-btn:hover {
+    background: #e84646;
+  }
+  
+  /* ===== NAVIGATION BUTTONS ===== */
+  .doctor-nav {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+  
+  .doctor-nav button {
+    padding: 10px 18px;
+    border: none;
+    background: #6c63ff;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.25s;
+  }
+  
+  .doctor-nav button:hover {
+    background: #554de0;
+  }
+  
+  .doc-card {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    border: 1px solid #ece7ff;
+  }
+  
+  .doc-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #4e44c7;
+  }
+  
+  .doc-info {
+    margin: 6px 0;
+    font-size: 15px;
+  }
+  
+  .status-approved {
+    background: #1cc88a;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: white;
+    font-size: 12px;
+  }
+  
+  .status-pending {
+    background: #f6c23e;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: white;
+    font-size: 12px;
+  }
+  
+  .status-declined {
+    background: #e74a3b;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: white;
+    font-size: 12px;
+  }
+  
+  .action-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    margin-right: 10px;
+    transition: 0.25s;
+  }
+  
+  .action-approve {
+    background: #1cc88a;
+    color: white;
+  }
+  
+  .action-approve:hover {
+    background: #14a876;
+  }
+  
+  .action-decline {
+    background: #e74a3b;
+    color: white;
+  }
+  
+  .action-decline:hover {
+    background: #cf3a2a;
+  }
