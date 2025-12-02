@@ -2,9 +2,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import Login from "./pages/LoginPage"
+import SignupPage from "./pages/SignupPage";
 import PatientDashboard from "./pages/patient/PatientDashboard";
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
-import AdminDashboard from "./pages//admin/AdminDashboard";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 import UpcomingAppointments from "./pages/patient/UpcomingAppointments";
 import PastAppointments from "./pages/patient/PastAppointments";
@@ -21,7 +22,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignupPage />} />
 
+        {/* Patient Routes */}
         <Route
           path="/patient"
           element={
@@ -58,6 +61,7 @@ export default function App() {
           }
         />
 
+        {/* Doctor Routes */}
         <Route
           path="/doctor"
           element={
@@ -76,6 +80,7 @@ export default function App() {
           }
         />
 
+        {/* Admin Routes */}
         <Route
           path="/admin"
           element={
@@ -102,6 +107,11 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        
+        
+        {/* Fallback ROute */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
+
       </Routes>
     </BrowserRouter>
   );
