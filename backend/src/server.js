@@ -9,7 +9,7 @@ app.use(cookieParser());
 app.use(express.json());
 // Allow cookies from frontend
 app.use(cors({
-    origin: ["http://localhost:5173", "https://your-vercel-url.vercel.app"],
+    origin: ["http://localhost:5173", "https://capstone-seven-liart.vercel.app/"],
     credentials: true
   }));
 
