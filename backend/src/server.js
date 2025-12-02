@@ -5,13 +5,15 @@ dotenv.config();
 const cookieParser = require("cookie-parser");
 
 const app = express();
-app.use(cookieParser());
 app.use(express.json());
 // Allow cookies from frontend
 app.use(cors({
-    origin: ["http://localhost:5173", "https://capstone-seven-liart.vercel.app/"],
-    credentials: true
-  }));
+  origin: ["http://localhost:5173", "https://capstone-seven-liart.vercel.app"],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+  app.use(cookieParser());
 
 // Routes
 // register + login

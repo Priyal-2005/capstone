@@ -76,15 +76,17 @@ async function login(req, res) {
 
         res.cookie("accessToken", accessToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: true,
+            sameSite: "none",
+            path: "/",
             maxAge: 1000 * 60 * 30
         });
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: true,
+            sameSite: "none",
+            path: "/",
             maxAge: 1000 * 60 * 60 * 24 * 7
         });
 
@@ -121,8 +123,9 @@ const refresh = (req, res) => {
 
     res.cookie("accessToken", newAccessToken, {
         httpOnly: true,
-        secure: false,
-        sameSite: "lax",
+        secure: true,
+        sameSite: "none",
+        path: "/",
         maxAge: 1000 * 60 * 15
     });
 
