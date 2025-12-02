@@ -9,7 +9,7 @@ export default function ProtectedRoute({ children, allowedRoles }) {
   const [valid, setValid] = useState(false);
 
   useEffect(() => {
-    axios.get("/user")
+    axios.get("https://capstone-1235.onrender.com/user", { withCredentials: true })
       .then(() => setValid(true))
       .catch(() => setValid(false))
       .finally(() => setLoading(false));

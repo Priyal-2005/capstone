@@ -12,7 +12,11 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("/auth/login", { email, password });
+      const res = await axios.post(
+        "https://capstone-1235.onrender.com/auth/login",
+        { email, password },
+        { withCredentials: true }
+      );
 
       // store role + name in localStorage
       localStorage.setItem("role", res.data.role);
@@ -30,7 +34,7 @@ export default function Login() {
   return (
     <div className="auth-page">
       <div className="login-container">
-        <div className="login-card">   {/* <-- THIS FIXES THE UI */}
+        <div className="login-card">
           <h2 className="login-title">Login</h2>
   
           <form onSubmit={submit} className="login-form">
