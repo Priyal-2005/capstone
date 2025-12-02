@@ -45,8 +45,10 @@ export default function AllDoctors() {
           <option value="">All</option>
           <option value="Cardiology">Cardiology</option>
           <option value="Dermatology">Dermatology</option>
-          <option value="Neurology">Neurology</option>
-          <option value="Pediatrics">Pediatrics</option>
+          <option value="Neurology">Neurologist
+          </option>
+          <option value="Oncologist">Oncologist</option>
+          <option value="Gynecologist">Gynecologist</option>
         </select>
       </div>
 
@@ -64,13 +66,54 @@ export default function AllDoctors() {
         </div>
       ))}
 
-      {selectedDoctor && (
-        <BookingForm
-          doctor={selectedDoctor}
-          onCancel={() => setSelectedDoctor(null)}
-          onSubmit={(date, time) => {}}
-        />
-      )}
+      {/* PAGINATION BUTTONS */}
+      <div style={{ display: "flex", gap: "10px", marginTop: 20 }}>
+        <button 
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+          className="primary-btn"
+        >
+          Prev
+        </button>
+
+        <button
+          disabled={page * limit >= total}
+          onClick={() => setPage(page + 1)}
+          className="primary-btn"
+        >
+          Next
+        </button>
+      </div>
+
+{selectedDoctor && (
+  <BookingForm
+    doctor={selectedDoctor}
+    onCancel={() => setSelectedDoctor(null)}
+    onSubmit={async (date, time) => {
+      try {
+        const dateTime = new Date(`${date}T${time}:00`).toISOString();
+
+        await axios.post("/appointments/book", {
+          doctorId: selectedDoctor.id,
+          dateTime
+        });
+
+        alert("Appointment successfully booked!");
+
+        setSelectedDoctor(null);
+
+      } catch (err) {
+        console.error(err);
+
+        if (err.response?.data?.message?.includes("slot")) {
+          alert("This time slot is already booked");
+        } else {
+          alert("There was a problem booking your appointment");
+        }
+      }
+    }}
+  />
+)}
     </div>
   );
 }
