@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Layout from "./components/Layout";
 
 import Login from "./pages/LoginPage"
 import SignupPage from "./pages/SignupPage";
@@ -12,6 +13,7 @@ import PastAppointments from "./pages/patient/PastAppointments";
 import AllDoctors from "./pages/patient/AllDoctors";
 
 import DoctorAppointments from "./pages/doctor/DoctorAppointments";
+import DoctorUpcoming from "./pages/doctor/DoctorUpcoming";
 
 import ManageDoctors from "./pages/admin/ManageDoctors";
 import ManageAppointments from "./pages/admin/ManageAppointments";
@@ -29,7 +31,9 @@ export default function App() {
           path="/patient"
           element={
             <ProtectedRoute allowedRoles={["PATIENT"]}>
-              <PatientDashboard />
+              <Layout>
+                <PatientDashboard />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -38,7 +42,9 @@ export default function App() {
           path="/patient/upcoming"
           element={
             <ProtectedRoute allowedRoles={["PATIENT"]}>
-              <UpcomingAppointments />
+              <Layout>
+                <UpcomingAppointments />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -47,7 +53,9 @@ export default function App() {
           path="/patient/past"
           element={
             <ProtectedRoute allowedRoles={["PATIENT"]}>
-              <PastAppointments />
+              <Layout>
+                <PastAppointments />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -56,7 +64,9 @@ export default function App() {
           path="/patient/doctors"
           element={
             <ProtectedRoute allowedRoles={["PATIENT"]}>
-              <AllDoctors />
+              <Layout>
+                <AllDoctors />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -66,7 +76,9 @@ export default function App() {
           path="/doctor"
           element={
             <ProtectedRoute allowedRoles={["DOCTOR"]}>
-              <DoctorDashboard />
+              <Layout>
+                <DoctorDashboard />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -75,7 +87,20 @@ export default function App() {
           path="/doctor/appointments"
           element={
             <ProtectedRoute allowedRoles={["DOCTOR"]}>
-              <DoctorAppointments />
+              <Layout>
+                <DoctorAppointments />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/doctor/upcoming"
+          element={
+            <ProtectedRoute allowedRoles={["DOCTOR"]}>
+              <Layout>
+                <DoctorUpcoming />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -85,7 +110,9 @@ export default function App() {
           path="/admin"
           element={
             <ProtectedRoute allowedRoles={["ADMIN"]}>
-              <AdminDashboard />
+              <Layout>
+                <AdminDashboard />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -94,7 +121,10 @@ export default function App() {
           path="/admin/manage-doctors"
           element={
             <ProtectedRoute allowedRoles={["ADMIN"]}>
-              <ManageDoctors />
+              <Layout>
+                <ManageDoctors />
+              </Layout>
+
             </ProtectedRoute>
           }
         />
@@ -103,7 +133,9 @@ export default function App() {
           path="/admin/manage-appointments"
           element={
             <ProtectedRoute allowedRoles={["ADMIN"]}>
-              <ManageAppointments />
+              <Layout>
+                <ManageAppointments />
+              </Layout>
             </ProtectedRoute>
           }
         />

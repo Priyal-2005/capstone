@@ -9,7 +9,7 @@
   .doctor-title {
     font-size: 30px;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 28px;
     color: #5a4fcf;
   }
   
@@ -66,7 +66,7 @@
     padding: 18px;
     border-radius: 12px;
     margin-bottom: 18px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.10);
     border: 1px solid #ece7ff;
   }
   

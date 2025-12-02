@@ -8,25 +8,29 @@ export default function DoctorDashboard() {
   const [today, setToday] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [view, setView] = useState("ALL");
 
-  const loadData = () => {
-    setLoading(true);
+  const loadData = async () => {
+    try {
+      setLoading(true);
 
-    axios
-      .get("/doctor/appointments/today")
-      .then((res) => setToday(res.data.data))
-      .catch((err) => console.error(err));
+      const [todayRes, upcomingRes] = await Promise.all([
+        axios.get("/doctor/appointments/today"),
+        axios.get("/doctor/appointments/upcoming")
+      ]);
 
-    axios
-      .get("/doctor/appointments/upcoming")
-      .then((res) => setUpcoming(res.data.data))
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+      setToday(todayRes.data.data || []);
+      setUpcoming(upcomingRes.data.data || []);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    loadData();
+    (async () => {
+      await loadData();
+    })();
   }, []);
 
   const logout = async () => {
@@ -63,10 +67,10 @@ export default function DoctorDashboard() {
       </div>
 
       <div className="doctor-nav">
-      <button onClick={() => setView("UPCOMING")}>Upcoming Appointments</button>
-        <button onClick={() => (window.location.href = "/doctor/appointments")}>
-          All Appointments
-        </button>
+      <button onClick={() => (window.location.href = "/doctor/upcoming")}>Upcoming Appointments</button>
+      <button onClick={() => (window.location.href = "/doctor/appointments")}>
+        All Appointments
+      </button>
       </div>
 
 

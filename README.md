@@ -59,7 +59,7 @@ MediConnect is a full-stack doctor appointment booking system that allows patien
 | **Admin Module**          | Approve/reject doctor accounts, manage users and appointments, view system statistics          |
 | **Pagination**            | Paginate doctor lists and appointment logs for scalability                                     |
 | **Filtering & Sorting**   | Filter doctors by specialization, sort by experience, fees, or ratings; search doctors by name |
-| **Hosting**               | Frontend deployed on Vercel, backend on Render, database on PlanetScale (MySQL)                |
+| **Hosting**               | Frontend deployed on Vercel, backend on Render, database on Aiven (MySQL)                |
 
 ---
 
@@ -71,7 +71,7 @@ MediConnect is a full-stack doctor appointment booking system that allows patien
 | **Backend**       | Node.js, Express.js                                                            |
 | **Database**      | MySQL                                                                          |
 | **Authentication**| JWT-based login/signup                                                         |
-| **Hosting**       | Vercel, Render, Aiven (MySQL)                                                  |
+| **Hosting**       | Vercel, Render, Aiven                                                  |
 
 ---
 
@@ -90,12 +90,108 @@ MediConnect is a full-stack doctor appointment booking system that allows patien
 | `/api/admin/doctors`       | GET        | Admin manages doctor accounts       | Admin            |
 | `/api/admin/appointments`  | GET        | View all system appointments        | Admin            |
 
+---
 
+## 📡 **Complete API Reference (All Implemented Endpoints)**
 
-GitHub Repo Link - https://github.com/Priyal-2005/capstone
+Below is the full list of every API used in MediConnect, grouped by role and functionality.
 
-GitHub Link (2) - https://github.com/Priyal-2005/MediConnect
+---
 
-Frontend Hosted Link (Vercel) - https://capstone-nine-black.vercel.app/
+# 🔐 AUTHENTICATION APIs
 
-Backend Hosted Link (Render) - https://capstone-1235.onrender.com
+### **Register Patient**
+**POST** `/auth/register`  
+Creates a new patient user.
+
+### **Login (All Roles)**
+**POST** `/auth/login`  
+Authenticates user and sets HTTP-only cookies.
+
+### **Logout**
+**POST** `/auth/logout`  
+Clears auth cookies.
+
+### **Get Current User**
+**GET** `/user`  
+Returns logged‑in user's profile (id, name, role).
+
+---
+
+# 🧑‍⚕️ PATIENT APIs
+
+### **Get Doctor List (Search, Filter, Pagination, Sort)**
+**GET** `/doctors`  
+Query params:
+- `page`
+- `limit`
+- `search`
+- `specialization`
+- `sort`
+- `order`
+
+### **Book Appointment**
+**POST** `/appointments/book`  
+Body:
+- `doctorId`
+- `dateTime`
+
+### **Get Upcoming Appointments**
+**GET** `/appointments/upcoming`
+
+### **Get Past Appointments**
+**GET** `/appointments/past`
+
+---
+
+# 👨‍⚕️ DOCTOR APIs
+
+### **Get Today’s Appointments**
+**GET** `/doctor/appointments/today`
+
+### **Get Upcoming Appointments**
+**GET** `/doctor/appointments/upcoming`
+
+### **Approve / Decline Appointment**
+**PUT** `/doctor/appointments/status`  
+Body:
+- `appointmentId`
+- `status` (`APPROVED` / `DECLINED`)
+
+---
+
+# 🧑‍💼 ADMIN APIs
+
+### **Get All Doctors**
+**GET** `/admin/manage-doctors`
+
+### **Add New Doctor**
+**POST** `/admin/manage-doctors`  
+Body:
+- `name`
+- `email`
+- `password`
+- `specialization`
+
+### **Edit Doctor**
+**PUT** `/admin/manage-doctors/:id`
+
+### **Delete Doctor**
+**DELETE** `/admin/manage-doctors/:id`
+
+### **Get All Appointments**
+**GET** `/admin/manage-appointments`
+
+### **Delete Appointment**
+**DELETE** `/admin/manage-appointments/:id`
+
+---
+
+# 🧵 INTERNAL / SUPPORTING ROUTES
+(Used implicitly by frontend)
+
+### **Get Logged-In User (Role Validation)**
+**GET** `/user`  
+Used by ProtectedRoute.
+
+---

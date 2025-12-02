@@ -10,29 +10,35 @@ export default function ManageDoctors() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [specialization, setSpecialization] = useState("");
 
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState(null);
 
-  const loadDoctors = () => {
-    setLoading(true);
-    axios
-      .get("/admin/doctors")
-      .then((res) => setDoctors(res.data.data))
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+  const loadDoctors = async () => {
+    try {
+      const res = await axios.get("/admin/doctors");
+      setDoctors(res.data.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    loadDoctors();
+    // call async loader without triggering sync setState warnings
+    (async () => {
+      await loadDoctors();
+    })();
   }, []);
 
   const handleAddDoctor = async (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password || !specialization) {
+    if (!name || !email || !phone || !password || !specialization) {
       alert("Please fill all fields");
       return;
     }
@@ -41,6 +47,7 @@ export default function ManageDoctors() {
       await axios.post("/admin/doctors", {
         name,
         email,
+        phone,
         password,
         specialization,
       });
@@ -48,6 +55,7 @@ export default function ManageDoctors() {
       alert("Doctor added successfully");
       setName("");
       setEmail("");
+      setPhone("");
       setPassword("");
       setSpecialization("");
       loadDoctors();
@@ -61,6 +69,7 @@ export default function ManageDoctors() {
     setEditId(doc.id);
     setName(doc.user.name);
     setEmail(doc.user.email);
+    setPhone(doc.user.phone || "");
     setSpecialization(doc.specialization);
     setPassword("");
   };
@@ -68,7 +77,7 @@ export default function ManageDoctors() {
   const handleUpdateDoctor = async (e) => {
     e.preventDefault();
 
-    if (!name || !email || !specialization) {
+    if (!name || !email || !phone || !specialization) {
       alert("Please fill all fields");
       return;
     }
@@ -77,6 +86,7 @@ export default function ManageDoctors() {
       await axios.put(`/admin/doctors/${editId}`, {
         name,
         email,
+        phone,
         specialization,
       });
 
@@ -85,6 +95,7 @@ export default function ManageDoctors() {
       setEditId(null);
       setName("");
       setEmail("");
+      setPhone("");
       setPassword("");
       setSpecialization("");
       loadDoctors();
@@ -122,12 +133,21 @@ export default function ManageDoctors() {
           placeholder="Doctor Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
 
         <input
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+
+        <input
+          placeholder="Phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          required
         />
 
         {!editMode && (
@@ -136,6 +156,7 @@ export default function ManageDoctors() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
         )}
 
@@ -143,6 +164,7 @@ export default function ManageDoctors() {
           placeholder="Specialization"
           value={specialization}
           onChange={(e) => setSpecialization(e.target.value)}
+          required
         />
 
         <button type="submit">
@@ -158,6 +180,7 @@ export default function ManageDoctors() {
               setEditId(null);
               setName("");
               setEmail("");
+              setPhone("");
               setPassword("");
               setSpecialization("");
             }}
@@ -175,6 +198,7 @@ export default function ManageDoctors() {
         <div key={doc.id} className="admin-card">
           <div className="info-row"><strong>{doc.user.name}</strong></div>
           <div className="info-row"><strong>Email:</strong> {doc.user.email}</div>
+          <div className="info-row"><strong>Phone:</strong> {doc.user.phone}</div>
           <div className="info-row"><strong>Specialization:</strong> {doc.specialization}</div>
 
           <div style={{ marginTop: 10 }}>

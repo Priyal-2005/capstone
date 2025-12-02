@@ -9,21 +9,28 @@ export default function DoctorAppointments() {
   const [upcoming, setUpcoming] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const loadData = () => {
-    setLoading(true);
+  const loadData = async () => {
+    try {
+      setLoading(true);
 
-    axios.get("/doctor/appointments/today")
-      .then(res => setToday(res.data.data))
-      .catch(err => console.error(err));
+      const [todayRes, upcomingRes] = await Promise.all([
+        axios.get("/doctor/appointments/today"),
+        axios.get("/doctor/appointments/upcoming")
+      ]);
 
-    axios.get("/doctor/appointments/upcoming")
-      .then(res => setUpcoming(res.data.data))
-      .catch(err => console.error(err))
-      .finally(() => setLoading(false));
+      setToday(todayRes.data.data || []);
+      setUpcoming(upcomingRes.data.data || []);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    loadData();
+    (async () => {
+      await loadData();
+    })();
   }, []);
 
   const updateStatus = async (appointmentId, status) => {

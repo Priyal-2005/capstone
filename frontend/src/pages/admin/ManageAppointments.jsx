@@ -8,17 +8,22 @@ export default function ManageAppointments() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const loadAppointments = () => {
-    setLoading(true);
-    axios
-      .get("/admin/appointments")
-      .then((res) => setAppointments(res.data.data))
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+  const loadAppointments = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get("/admin/appointments");
+      setAppointments(res.data.data || []);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    loadAppointments();
+    (async () => {
+      await loadAppointments();
+    })();
   }, []);
 
   const handleDeleteAppointment = async (id) => {

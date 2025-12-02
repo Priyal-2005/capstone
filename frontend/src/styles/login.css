@@ -1,7 +1,6 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+/* Apply centered layout ONLY on login & signup pages */
+.auth-page {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +20,7 @@ html, body {
   padding: 35px 40px;
   border-radius: 14px;
   width: 360px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.15);
   text-align: center;
   border: 1px solid #e2ddff;
 }
@@ -41,7 +40,7 @@ html, body {
 
 .login-input {
   padding: 12px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: 1px solid #c5c0ff;
   background: #faf8ff;
   color: black;

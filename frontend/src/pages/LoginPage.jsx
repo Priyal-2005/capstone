@@ -25,37 +25,41 @@ export default function Login() {
       if (res.data.role === "DOCTOR") navigate("/doctor");
       if (res.data.role === "ADMIN") navigate("/admin");
     } catch (err) {
+      console.log(err)
       alert("Login failed");
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <h2 className="login-title">Login</h2>
-
-        <form onSubmit={submit} className="login-form">
-          <input 
-            className="login-input"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <input 
-            className="login-input"
-            placeholder="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <button className="login-btn">Login</button>
-
-          <p className="login-text">Don't have an account? <a href="/signup">Sign up</a>
-          </p>
-        </form>
+    <div className="auth-page">
+      <div className="login-container">
+        <div className="login-card">   {/* <-- THIS FIXES THE UI */}
+          <h2 className="login-title">Login</h2>
+  
+          <form onSubmit={submit} className="login-form">
+            <input 
+              className="login-input"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+  
+            <input 
+              className="login-input"
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+  
+            <button className="login-btn">Login</button>
+  
+            <p className="login-text">
+              Don't have an account? <a href="/signup">Sign up</a>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
-  );
+  )
 }

@@ -12,6 +12,7 @@ export default function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
 
   const submit = async (e) => {
     e.preventDefault();
@@ -26,6 +27,7 @@ export default function SignupPage() {
         name,
         email,
         password,
+        phone,
         role: "PATIENT"
       });
 
@@ -37,39 +39,48 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <h2 className="login-title">Sign Up</h2>
+    <div className="auth-page">
+      <div className="login-container">
+        <div className="login-card">
+          <h2 className="login-title">Sign Up</h2>
 
-        <form onSubmit={submit} className="login-form">
-          <input
-            className="login-input"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <form onSubmit={submit} className="login-form">
+            <input
+              className="login-input"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
 
-          <input
-            className="login-input"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+            <input
+              className="login-input"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-          <input
-            className="login-input"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            <input
+              className="login-input"
+              placeholder="Phone Number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
 
-          <button className="login-btn">Create Account</button>
+            <input
+              className="login-input"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-          <p className="login-text">
-            Already have an account? <a href="/login">Login</a>
-          </p>
-        </form>
+            <button className="login-btn">Create Account</button>
+
+            <p className="login-text">
+              Already have an account? <a href="/login">Login</a>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );
