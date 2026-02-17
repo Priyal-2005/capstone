@@ -34,4 +34,5 @@ app.use("/doctor/appointments", require("./routes/doctor.appointment.routes"));
 // admin routes
 app.use("/admin", require("./routes/admin.routes"));
 
-app.listen(8000, () => console.log("Running on http://localhost:8000"));
+const PORT = 8000;
+app.listen(PORT, () => console.log(`Running on http://localhost:${PORT}`));
