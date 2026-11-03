@@ -27,24 +27,13 @@ const bookAppointment = async (req, res) => {
         if (!doctor) {
             return res.status(404).json({ message: "Doctor not found" });
         }
-        // Optional: check conflicts (same doctor + exact same dateTime)
-        const conflict = await prisma.appointment.findFirst({
-            where: {
-            doctorId: doctor.id,
-            dateTime: requestedDate
-            }
-        });
-        if (conflict) {
-            return res.status(409).json({ message: "That slot is already booked" });
-        }
-  
-
         const appointment = await prisma.appointment.create({
             data: {
               patientId,
               doctorId: doctor.id,
               dateTime: requestedDate,
-              status: "PENDING"
+              status: "PENDING",
+              activeSlot: 1
             },
             include: {
               doctor: {
@@ -57,6 +46,10 @@ const bookAppointment = async (req, res) => {
         return res.status(201).json({message: "Appointment booked successfully", data: appointment});
     }
     catch (error) {
+        // Unique (doctorId, dateTime, activeSlot) violated: the slot is taken
+        if (error.code === "P2002") {
+            return res.status(409).json({ message: "That slot is already booked" });
+        }
         console.log(error);
         return res.status(500).json({error: "Internal Server Error"});
     }
