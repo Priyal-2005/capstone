@@ -61,7 +61,8 @@ const updateAppointmentStatus = async(req, res) => {
 
         const updatedAppointment = await prisma.appointment.update({
             where: {id: appointmentId},
-            data: {status}
+            // PENDING/APPROVED hold the slot (1); anything else frees it (null)
+            data: {status, activeSlot: ["PENDING", "APPROVED"].includes(status) ? 1 : null}
         });
 
         return res.json({
@@ -70,6 +71,10 @@ const updateAppointmentStatus = async(req, res) => {
         });
     }
     catch (error) {
+        // Re-activating an appointment whose slot was rebooked in the meantime
+        if (error.code === "P2002") {
+            return res.status(409).json({message: "That slot is already booked"});
+        }
         console.error("Error updating appointment status:", error);
         return res.status(500).json({message: "Internal server error"});
     }

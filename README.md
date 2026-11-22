@@ -195,3 +195,49 @@ Body:
 Used by ProtectedRoute.
 
 ---
+
+---
+
+## **Concurrency: preventing double-booking**
+
+**The race.** `POST /appointments/book` used to check the slot with `findFirst` and then `create` the appointment. Two requests arriving together could both pass the check before either inserted, so the same doctor and time were booked twice. The check also ignored status, so a declined appointment would have kept blocking its slot.
+
+**The fix.** The database now enforces it. `Appointment.activeSlot` is `1` while an appointment is `PENDING` or `APPROVED` and `NULL` once it is declined, and `@@unique([doctorId, dateTime, activeSlot])` makes a second active booking of a slot impossible. Unique indexes treat NULLs as distinct, so a freed slot can be rebooked. The handler just inserts and maps Prisma error `P2002` to `409 "That slot is already booked"`; the doctor status update keeps `activeSlot` in sync. The migration backfills existing rows; run `node scripts/check-duplicate-active-appointments.js` first to find any existing duplicates, which would make the unique index fail.
+
+**The test.** `backend/tests/booking.concurrency.test.js` fires 20 simultaneous booking requests for the same doctor and time.
+
+| | Requests that returned 201 | Rows in DB for the slot |
+|---|---|---|
+| Before the fix | 4-5 of 20 (4 runs: 5, 5, 5, 4) | 4-5 |
+| After the fix | 1 of 20 (3 runs; the other 19 returned 409) | 1 |
+
+Run the tests against a local database (never a hosted one; the test setup refuses non-local hosts):
+
+```bash
+cd backend
+createdb mediconnect_test
+export TEST_DATABASE_URL="postgresql://<user>@localhost:5432/mediconnect_test?schema=public"
+DATABASE_URL="$TEST_DATABASE_URL" npx prisma migrate deploy
+npm test
+```
+
+CI (`.github/workflows/ci.yml`) runs the same steps against a Postgres service container.
+
+---
+
+## **Demo accounts**
+
+Created by `backend/prisma/seed.js` (the seed password is defined in that file). Running the seed **deletes all existing data**, so use it only on a local or throwaway database.
+
+| Role | Email |
+|---|---|
+| Admin | `admin@test.com` |
+| Patient | `p1@test.com` (also `p2@test.com`, `p3@test.com`, `p4@test.com`) |
+| Doctor | `doctor1@test.com` (also `doctor2@test.com`) |
+
+---
+
+## **TODO**
+
+- Live frontend URL (Vercel): _add link_
+- Live backend URL (Render): _add link_
